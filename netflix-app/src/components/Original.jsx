@@ -1,30 +1,31 @@
-import { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Original = () => {
+  const navigate = useNavigate();
   const [movies, setMovies] = useState([]);
 
-  const getTopRated = async () => {
-    const response = await fetch(
-      "https://api.themoviedb.org/3/movie/now_playing?api_key=9042622973be3bf9c566b65a236a89bc"
-    );
-    if (!response.ok) {
-      throw new Error("Request Failed!");
-    }
-    const data = await response.json();
-    let topRatedMovies = [];
-    for (let movie of data.results) {
-      topRatedMovies.push({
-        id: movie.id,
-        title: movie.title,
-        overview: movie.overview,
-        poster_path: movie.poster_path,
-        release_date: movie.release_date,
-        vote_average: movie.vore_average,
-      });
-    }
-    setMovies(topRatedMovies);
-  };
-  getTopRated();
+  useEffect(() => {
+    const getTopRated = async () => {
+      const response = await fetch(
+        "https://api.themoviedb.org/3/trending/tv/week?api_key=9042622973be3bf9c566b65a236a89bc"
+      );
+      if (!response.ok) {
+        throw new Error("Request Failed!");
+      }
+      const data = await response.json();
+      let topRatedMovies = [];
+      for (let movie of data.results) {
+        topRatedMovies.push({
+          id: movie.id,
+          title: movie.name,
+          poster_path: movie.poster_path,
+        });
+      }
+      setMovies(topRatedMovies);
+    };
+    getTopRated();
+  }, []);
 
   return (
     <div className="text-white">
@@ -33,6 +34,7 @@ const Original = () => {
         <div className="posters_container">
           {movies.map((movie) => (
             <img
+              onClick={() => navigate(`/Original/${movie.id}`)}
               key={movie.id}
               src={`https://image.tmdb.org/t/p/original/${movie.poster_path}`}
               alt={movie.title}
@@ -45,4 +47,4 @@ const Original = () => {
   );
 };
 
-export default Original;
+export default React.memo(Original);

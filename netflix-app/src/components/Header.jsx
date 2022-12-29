@@ -1,6 +1,10 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import netflix from "../assets/netflix.png";
 
 const Header = () => {
+  const navigate = useNavigate();
+
   const [scrollY, setScrollY] = useState(0);
   window.addEventListener("scroll", () => {
     setScrollY(window.scrollY);
@@ -16,9 +20,10 @@ const Header = () => {
           }`,
         }}
       >
-        <div className="col-6 ">
+        <div className="col-6">
           <img
-            src="https://assets.stickpng.com/images/580b57fcd9996e24bc43c529.png"
+            onClick={() => navigate("/")}
+            src={netflix}
             alt="Netflix Logo"
             width="80px"
             className="ms-4"
