@@ -101,7 +101,7 @@ const View = () => {
           </div>
           <div>|</div>
           <div className="me-4">
-            <span style={{ color: "rgb(97, 97, 97)" }}>Genres: </span>{" "}
+            <span style={{ color: "rgb(97, 97, 97)" }}>Genres: </span>
             {movies.genres}
           </div>
         </div>
