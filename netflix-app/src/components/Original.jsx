@@ -6,7 +6,7 @@ const Original = () => {
   const [movies, setMovies] = useState([]);
 
   useEffect(() => {
-    const getTopRated = async () => {
+    const getOriginals = async () => {
       const response = await fetch(
         "https://api.themoviedb.org/3/trending/tv/week?api_key=9042622973be3bf9c566b65a236a89bc"
       );
@@ -24,7 +24,7 @@ const Original = () => {
       }
       setMovies(topRatedMovies);
     };
-    getTopRated();
+    getOriginals();
   }, []);
 
   return (

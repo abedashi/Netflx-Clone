@@ -1,5 +1,11 @@
 const NotFound = () => {
-  return <h1>404 page not found</h1>;
+  return (
+    <div className="d-flex align-items-center justify-content-center mt-5">
+      <div>
+        <h1>404 page not found</h1>;
+      </div>
+    </div>
+  );
 };
 
 export default NotFound;

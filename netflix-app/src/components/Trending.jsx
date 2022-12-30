@@ -4,7 +4,7 @@ const Trending = () => {
   const [movies, setMovies] = useState([]);
 
   useEffect(() => {
-    const getTopRated = async () => {
+    const getTrending = async () => {
       const response = await fetch(
         "https://api.themoviedb.org/3/trending/all/week?api_key=9042622973be3bf9c566b65a236a89bc"
       );
@@ -22,7 +22,7 @@ const Trending = () => {
       }
       setMovies(topRatedMovies);
     };
-    getTopRated();
+    getTrending();
   }, []);
 
   return (

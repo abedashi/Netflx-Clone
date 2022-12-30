@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const RandomMovie = () => {
+  const navigate = useNavigate();
   const [movies, setMovies] = useState({});
 
   useEffect(() => {
-    const getTopRated = async () => {
+    const getRandomShow = async () => {
       const response = await fetch(
         "https://api.themoviedb.org/3/trending/tv/week?api_key=9042622973be3bf9c566b65a236a89bc"
       );
@@ -19,7 +21,7 @@ const RandomMovie = () => {
 
       setMovies(loadedShow);
     };
-    getTopRated();
+    getRandomShow();
   }, []);
 
   return (
@@ -43,7 +45,14 @@ const RandomMovie = () => {
         </h1>
         <div className="d-flex align-items-center gap-4">
           <div>
-            <button className="button">Play</button>
+            <button
+              className="button"
+              onClick={() => {
+                navigate(`/Original/${movies.id}`);
+              }}
+            >
+              Play
+            </button>
           </div>
           <div>
             <button className="button">My List</button>
