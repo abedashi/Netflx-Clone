@@ -14,8 +14,6 @@ const App = () => {
         <Route path="/" element={<MoviesList />} />
         <Route path="/Original/:id" element={<View />} />
         <Route path="*" element={<NotFound />} />
-        {/* <Route path="/Top-Rated/:id" element={<View />} />
-        <Route path="/Trending/:id" /> */}
       </Routes>
     </>
   );
