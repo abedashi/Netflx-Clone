@@ -44,13 +44,15 @@ const Video = ({ id }) => {
             />
           </div>
         )}
-        {key.length === 0 && (
-          <div className="d-flex align-items-center justify-content-center">
-            <h1>No Offical Trialer</h1>
-          </div>
-        )}
       </div>
-      {key.length === 0 && <div style={{ height: "200px" }}>s</div>}
+      {key.length === 0 && (
+        <div
+          className="d-flex align-items-center justify-content-center"
+          style={{ height: "318px", color: "rgb(97, 97, 97)" }}
+        >
+          <h1>No Offical Trialer</h1>
+        </div>
+      )}
     </>
   );
 };
