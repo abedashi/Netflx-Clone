@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 
 const RandomMovie = () => {
-  const [movies, setMovies] = useState([]);
+  const [movies, setMovies] = useState({});
 
   useEffect(() => {
     const getTopRated = async () => {
@@ -12,28 +12,22 @@ const RandomMovie = () => {
         throw new Error("Request Failed!");
       }
       const data = await response.json();
-      let topRatedMovies = [];
-      for (let movie of data.results) {
-        topRatedMovies.push({
-          id: movie.id,
-          title: movie.name,
-          overview: movie.overview,
-          poster_path: movie.poster_path,
-          release_date: movie.first_air_date,
-          vote_average: movie.vote_average,
-        });
-      }
-      setMovies(topRatedMovies);
+      const random = Math.floor(Math.random() * 20);
+      let loadedShow = {
+        ...data.results[random],
+      };
+
+      setMovies(loadedShow);
     };
     getTopRated();
   }, []);
-  // tiLJNqQuCwIIgK30iavU6x0SFQj
+
   return (
     <div
       className="random-image"
       style={{
         height: "60vh",
-        backgroundImage: `url(https://image.tmdb.org/t/p/original//tiLJNqQuCwIIgK30iavU6x0SFQj.jpg`,
+        backgroundImage: `url(https://image.tmdb.org/t/p/original/${movies.poster_path}`,
       }}
     >
       <div style={{ height: "20vh" }}></div>
@@ -45,7 +39,7 @@ const RandomMovie = () => {
             paddingBottom: "0.3rem",
           }}
         >
-          Emily in Paris
+          {movies.name}
         </h1>
         <div className="d-flex align-items-center gap-4">
           <div>
@@ -65,10 +59,7 @@ const RandomMovie = () => {
             height: "80px",
           }}
         >
-          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Minus,
-          maiores laudantium assumenda fugit illo, magnam, beatae est sequi
-          distinctio iusto eos aut esse autem officiis? Exercitationem
-          laboriosam harum tenetur obcaecati.
+          {movies.overview}
         </h1>
       </div>
       <div className="linear-gradient"></div>
