@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import netflix from "../assets/netflix.png";
+import Search from "./Search";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -31,14 +32,21 @@ const Header = () => {
           />
         </div>
         <div className="col-6 d-flex align-items-center justify-content-end">
-          <img
-            src="https://upload.wikimedia.org/wikipedia/commons/0/0b/Netflix-avatar.png"
-            alt="Netflix Logo"
-            width="35px"
-            height="35px"
-            className="me-4"
-            style={{ cursor: "pointer" }}
-          />
+          <div className="d-flex align-items-center gap-4">
+            <div>
+              <Search />
+            </div>
+            <div>
+              <img
+                src="https://upload.wikimedia.org/wikipedia/commons/0/0b/Netflix-avatar.png"
+                alt="Netflix Logo"
+                width="35px"
+                height="35px"
+                className="me-4"
+                style={{ cursor: "pointer" }}
+              />
+            </div>
+          </div>
         </div>
       </div>
     </header>
