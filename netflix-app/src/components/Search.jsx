@@ -22,10 +22,10 @@ const Search = () => {
         ></i>
         {clicked && (
           <input
-            type="text"
-            placeholder="TV Shows Title"
-            className="search"
+            type="search"
             value={search}
+            className="search"
+            placeholder="TV Shows Title"
             onChange={onChangeSearchHandler}
           />
         )}
