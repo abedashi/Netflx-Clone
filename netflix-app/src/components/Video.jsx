@@ -1,29 +1,27 @@
 import { useEffect, useState } from "react";
 import ReactPlayer from "react-player";
+import useHttp from "../hooks/useHttp";
 
 const Video = ({ id }) => {
   const [key, setKey] = useState([]);
 
-  useEffect(() => {
-    const fetchVideoById = async () => {
-      const response = await fetch(
-        `https://api.themoviedb.org/3/tv/${id}/videos?api_key=9042622973be3bf9c566b65a236a89bc`
-      );
-      if (!response.ok) {
-        throw new Error("Request Failed");
-      }
-      const data = await response.json();
+  const getVideo = useHttp();
 
+  useEffect(() => {
+    const route = `tv/${id}/videos`;
+
+    const transformData = (videoObj) => {
       let loadedVideo = [];
-      for (const video of data.results) {
+      for (const video of videoObj.results) {
         if (video.name === "Official Trailer") {
           loadedVideo.push(video.key);
         }
       }
       setKey(loadedVideo);
     };
-    fetchVideoById();
-  }, [id]);
+
+    getVideo(route, transformData);
+  }, [id, getVideo]);
 
   return (
     <>

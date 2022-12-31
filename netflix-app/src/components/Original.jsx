@@ -1,21 +1,19 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import useHttp from "../hooks/useHttp";
+
+const route = "trending/tv/week";
 
 const Original = () => {
   const navigate = useNavigate();
   const [movies, setMovies] = useState([]);
 
+  const getOriginals = useHttp();
+
   useEffect(() => {
-    const getOriginals = async () => {
-      const response = await fetch(
-        "https://api.themoviedb.org/3/trending/tv/week?api_key=9042622973be3bf9c566b65a236a89bc"
-      );
-      if (!response.ok) {
-        throw new Error("Request Failed!");
-      }
-      const data = await response.json();
+    const transfomData = (originalsObj) => {
       let topRatedMovies = [];
-      for (let movie of data.results) {
+      for (let movie of originalsObj.results) {
         topRatedMovies.push({
           id: movie.id,
           title: movie.name,
@@ -24,8 +22,9 @@ const Original = () => {
       }
       setMovies(topRatedMovies);
     };
-    getOriginals();
-  }, []);
+
+    getOriginals(route, transfomData);
+  }, [getOriginals]);
 
   return (
     <div className="text-white">

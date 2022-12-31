@@ -1,19 +1,17 @@
 import React, { useEffect, useState } from "react";
+import useHttp from "../hooks/useHttp";
+
+const route = "trending/all/week";
 
 const Trending = () => {
   const [movies, setMovies] = useState([]);
 
+  const getTrending = useHttp();
+
   useEffect(() => {
-    const getTrending = async () => {
-      const response = await fetch(
-        "https://api.themoviedb.org/3/trending/all/week?api_key=9042622973be3bf9c566b65a236a89bc"
-      );
-      if (!response.ok) {
-        throw new Error("Request Failed!");
-      }
-      const data = await response.json();
+    const transformData = (trendingObj) => {
       let topRatedMovies = [];
-      for (let movie of data.results) {
+      for (let movie of trendingObj.results) {
         topRatedMovies.push({
           id: movie.id,
           title: movie.title,
@@ -22,8 +20,9 @@ const Trending = () => {
       }
       setMovies(topRatedMovies);
     };
-    getTrending();
-  }, []);
+
+    getTrending(route, transformData);
+  }, [getTrending]);
 
   return (
     <div className="text-white">

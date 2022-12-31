@@ -1,28 +1,27 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import useHttp from "../hooks/useHttp";
+
+const route = "trending/tv/week";
 
 const RandomMovie = () => {
   const navigate = useNavigate();
   const [movies, setMovies] = useState({});
 
+  const getRandomShow = useHttp();
+
   useEffect(() => {
-    const getRandomShow = async () => {
-      const response = await fetch(
-        "https://api.themoviedb.org/3/trending/tv/week?api_key=9042622973be3bf9c566b65a236a89bc"
-      );
-      if (!response.ok) {
-        throw new Error("Request Failed!");
-      }
-      const data = await response.json();
+    const transformData = (randomObj) => {
       const random = Math.floor(Math.random() * 20);
       let loadedShow = {
-        ...data.results[random],
+        ...randomObj.results[random],
       };
 
       setMovies(loadedShow);
     };
-    getRandomShow();
-  }, []);
+
+    getRandomShow(route, transformData);
+  }, [getRandomShow]);
 
   return (
     <div

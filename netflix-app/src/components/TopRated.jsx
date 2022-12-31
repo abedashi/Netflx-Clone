@@ -1,19 +1,17 @@
 import { useEffect, useState } from "react";
+import useHttp from "../hooks/useHttp";
+
+const route = "movie/top_rated";
 
 const TopRated = () => {
   const [movies, setMovies] = useState([]);
 
+  const getTopRated = useHttp();
+
   useEffect(() => {
-    const getTopRated = async () => {
-      const response = await fetch(
-        "https://api.themoviedb.org/3/movie/top_rated?api_key=9042622973be3bf9c566b65a236a89bc"
-      );
-      if (!response.ok) {
-        throw new Error("Request Failed!");
-      }
-      const data = await response.json();
+    const transformData = (topRatedObj) => {
       let topRatedMovies = [];
-      for (let movie of data.results) {
+      for (let movie of topRatedObj.results) {
         topRatedMovies.push({
           id: movie.id,
           title: movie.title,
@@ -22,8 +20,9 @@ const TopRated = () => {
       }
       setMovies(topRatedMovies);
     };
-    getTopRated();
-  }, []);
+
+    getTopRated(route, transformData);
+  }, [getTopRated]);
 
   return (
     <div className="text-white">
