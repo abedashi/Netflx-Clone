@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from "react";
+import useHttp from "../hooks/useHttp";
 
 const appContext = React.createContext({
   shows: [],
   search: "",
   clicked: false,
-  searchHandler: () => {},
   onToggle: () => {},
+  searchHandler: () => {},
 });
-export const API_KEY = "9042622973be3bf9c566b65a236a89bc";
+
+const route = "search/tv";
 
 export const ContextProvider = ({ children }) => {
   const [shows, setShows] = useState([]);
@@ -22,22 +24,16 @@ export const ContextProvider = ({ children }) => {
     setClicked((clicked) => !clicked);
   };
 
+  const fetchSearch = useHttp();
+
   useEffect(() => {
     if (search === "") {
       return;
     }
-    const fetchSearch = async () => {
-      const response = await fetch(
-        `https://api.themoviedb.org/3/search/tv?api_key=9042622973be3bf9c566b65a236a89bc&query=${search}`
-      );
 
-      if (!response.ok) {
-        throw new Error("Request Failed!");
-      }
-
-      const data = await response.json();
+    const transformData = (searchObj) => {
       let loadedShows = [];
-      for (let show of data.results) {
+      for (let show of searchObj.results) {
         if (show.poster_path !== null) {
           loadedShows.push({
             id: show.id,
@@ -48,11 +44,12 @@ export const ContextProvider = ({ children }) => {
       }
       setShows(loadedShows);
     };
-    fetchSearch();
-  }, [search]);
+
+    fetchSearch(route, transformData, `&query=${search}`);
+  }, [search, fetchSearch]);
 
   return (
-    <appContext.Provider value={{ shows, searchHandler, onToggle, clicked }}>
+    <appContext.Provider value={{ shows, clicked, searchHandler, onToggle }}>
       {children}
     </appContext.Provider>
   );
