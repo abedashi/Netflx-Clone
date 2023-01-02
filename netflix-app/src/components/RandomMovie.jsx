@@ -47,7 +47,7 @@ const RandomMovie = () => {
             <button
               className="button"
               onClick={() => {
-                navigate(`/Original/${movies.id}`);
+                navigate(`/Show/${movies.id}`);
               }}
             >
               Play

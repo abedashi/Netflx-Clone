@@ -1,30 +1,15 @@
-import { useNavigate } from "react-router-dom";
+import Card from "./UI/Card";
 
 const SearchedShow = ({ shows }) => {
-  const navigate = useNavigate();
-
   if (shows.length === 0) {
-    return <span>Empty</span>;
+    return (
+      <div className="d-flex align-items-center justify-content-center">
+        <span className="text-white banner ms-4">Search Not Found</span>
+      </div>
+    );
   }
 
-  return (
-    <div className="text-white">
-      <div className="ms-4">
-        <h2 className="banner">Recent TV Shows Search</h2>
-        <div className="posters_container">
-          {shows.map((show) => (
-            <img
-              onClick={() => navigate(`/Original/${show.id}`)}
-              key={show.id}
-              src={`https://image.tmdb.org/t/p/original/${show.poster_path}`}
-              alt={show.title}
-              className="poster poster_large"
-            />
-          ))}
-        </div>
-      </div>
-    </div>
-  );
+  return <Card movies={shows} banner="Recent TV Shows Search" />;
 };
 
 export default SearchedShow;

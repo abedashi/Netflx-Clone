@@ -48,7 +48,7 @@ const Video = ({ id }) => {
           className="d-flex align-items-center justify-content-center"
           style={{ color: "rgb(97, 97, 97)" }}
         >
-          <h1>No Offical Trialer</h1>
+          <h1>No Offical Trailer</h1>
         </div>
       )}
     </>
