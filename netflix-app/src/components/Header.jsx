@@ -1,15 +1,21 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import netflix from "../assets/netflix.png";
 import Search from "./Search";
 
 const Header = () => {
   const navigate = useNavigate();
-
   const [scrollY, setScrollY] = useState(0);
-  window.addEventListener("scroll", () => {
-    setScrollY(window.scrollY);
-  });
+
+  useEffect(() => {
+    const scroll = window.addEventListener("scroll", () => {
+      setScrollY(window.scrollY);
+    });
+
+    return () => {
+      window.removeEventListener("scroll", scroll);
+    };
+  }, []);
 
   return (
     <header>
